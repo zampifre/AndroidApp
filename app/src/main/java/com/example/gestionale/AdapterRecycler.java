@@ -1,14 +1,18 @@
 package com.example.gestionale;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -16,25 +20,32 @@ import java.util.ArrayList;
 public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyViewHolder> {
 
     private Context context;
-    private ArrayList id_array, descrizione;
+    Activity activity;
+    private ArrayList id_array, descrizione_array, ora, data;
 
-    AdapterRecycler(Context context, ArrayList id, ArrayList descrizione){
+    AdapterRecycler(Activity activity, Context context, ArrayList id, ArrayList descrizione, ArrayList ora, ArrayList data){
+        this.activity = activity;
         this.context = context;
         this.id_array = id;
-        this.descrizione = descrizione;
+        this.descrizione_array = descrizione;
+        this.ora = ora;
+        this.data = data;
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView id;
-        TextView descrizione;
+        TextView id, descrizione2, ora2, data2;
         CheckBox checkBox;
+        LinearLayout mainLayout;
 
         @SuppressLint("ResourceType")
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            descrizione = itemView.findViewById(R.id.Descrizione);
             id = itemView.findViewById(R.id.id);
+            descrizione2 = itemView.findViewById(R.id.descrizione);
+            ora2 = itemView.findViewById(R.id.ora);
+            data2 = itemView.findViewById(R.id.data);
             checkBox = itemView.findViewById(R.id.checkBox);
+            mainLayout = itemView.findViewById(R.id.mainlayout);
         }
     }
     @NonNull
@@ -47,9 +58,22 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AdapterRecycler.MyViewHolder holder, int position) {
-        holder.descrizione.setText(String.valueOf(descrizione.get(position)));
+    public void onBindViewHolder(@NonNull AdapterRecycler.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         holder.id.setText(String.valueOf(id_array.get(position)));
+        holder.descrizione2.setText(String.valueOf(descrizione_array.get(position)));
+        holder.ora2.setText(String.valueOf(ora.get(position)));
+        holder.data2.setText(String.valueOf(data.get(position)));
+        holder.mainLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, AggiornaActivity.class);
+                intent.putExtra("id", String.valueOf(id_array.get(position)));
+                intent.putExtra("descrizione", String.valueOf(descrizione_array.get(position)));
+                intent.putExtra("ora", String.valueOf(ora.get(position)));
+                intent.putExtra("data", String.valueOf(data.get(position)));
+                activity.startActivityForResult(intent, 1);
+            }
+        });
     }
 
     @Override

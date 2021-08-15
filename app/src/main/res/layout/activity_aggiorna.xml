@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#FFFFFF"
+    android:backgroundTint="#FFFFFF"
+    android:padding="30dp"
+    android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
+
+    <TextView
+        android:id="@+id/tvora2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="TextView"
+        android:textStyle="bold|italic"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvdata2"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvdata2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:text="TextView"
+        android:textStyle="bold|italic"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/salva2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:text="AGGIORNA"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/descrizione2"
+        tools:ignore="MissingConstraints" />
+
+    <EditText
+        android:id="@+id/descrizione2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:hint="Descrizione"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvora2" />
+
+    <Button
+        android:id="@+id/cancella"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="38dp"
+        android:text="CANCELLA"
+        android:textColor="#FF0000"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/salva2" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

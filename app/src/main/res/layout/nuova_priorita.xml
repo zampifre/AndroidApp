@@ -4,27 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="30dp">
+    android:padding="30dp"
+    android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
 
     <EditText
         android:id="@+id/descrizione"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
         android:ems="10"
         android:hint="Descrizione"
         android:inputType="textPersonName"
+        app:layout_constraintTop_toBottomOf="@+id/tvdata"
         tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="30dp"
-        tools:layout_editor_absoluteY="171dp" />
+        tools:layout_editor_absoluteX="30dp" />
 
     <Button
         android:id="@+id/salva"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="44dp"
         android:text="AGGIUNGI"
+        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        app:layout_constraintTop_toBottomOf="@+id/descrizione"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="30dp" />
+
+    <TextView
+        android:id="@+id/tvdata"
+        style="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="Seleziona qui la data dell'attività"
+        android:textSize="16sp"
+        android:textStyle="bold|italic"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/descrizione"
-        android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar"/>
+        app:layout_constraintTop_toBottomOf="@+id/tvora"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvora"
+        style="@style/Theme.AppCompat.DayNight.DarkActionBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="120dp"
+        android:text="Seleziona qui l'ora dell'attività"
+        android:textSize="16sp"
+        android:textStyle="bold|italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
