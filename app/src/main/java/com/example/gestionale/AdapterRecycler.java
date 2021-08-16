@@ -7,22 +7,26 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyViewHolder> {
 
     private Context context;
-    Activity activity;
+    private Activity activity;
     private ArrayList id_array, descrizione_array, ora, data;
 
+    Animation animazione;
     AdapterRecycler(Activity activity, Context context, ArrayList id, ArrayList descrizione, ArrayList ora, ArrayList data){
         this.activity = activity;
         this.context = context;
@@ -33,21 +37,25 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
     }
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        TextView id, descrizione2, ora2, data2;
+        TextView idt, descrizione2, ora2, data2;
         CheckBox checkBox;
         LinearLayout mainLayout;
+        String id;
 
         @SuppressLint("ResourceType")
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            id = itemView.findViewById(R.id.id);
+            idt = itemView.findViewById(R.id.id);
             descrizione2 = itemView.findViewById(R.id.descrizione);
             ora2 = itemView.findViewById(R.id.ora);
             data2 = itemView.findViewById(R.id.data);
             checkBox = itemView.findViewById(R.id.checkBox);
             mainLayout = itemView.findViewById(R.id.mainlayout);
+            animazione = AnimationUtils.loadAnimation(context, R.anim.mia_animazione);
+            mainLayout.setAnimation(animazione);
         }
     }
+
     @NonNull
     @Override
     public AdapterRecycler.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -59,10 +67,22 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
 
     @Override
     public void onBindViewHolder(@NonNull AdapterRecycler.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.id.setText(String.valueOf(id_array.get(position)));
+        holder.idt.setText(String.valueOf(id_array.get(position)));
         holder.descrizione2.setText(String.valueOf(descrizione_array.get(position)));
         holder.ora2.setText(String.valueOf(ora.get(position)));
         holder.data2.setText(String.valueOf(data.get(position)));
+        holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(compoundButton.isChecked()){
+                    DbPriorità db = new DbPriorità(context);
+                    db.cancellaRiga((String) id_array.get(position));
+                    activity.recreate();
+                } else{
+                    ;
+                }
+            }
+        });
         holder.mainLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -80,6 +100,5 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
     public int getItemCount() {
         return id_array.size();
     }
-
 
 }

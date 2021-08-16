@@ -6,6 +6,6 @@
         android:id="@+id/cancel_button"
         android:title="Cancella Tutto"
         android:icon="@drawable/canc"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
 
 </menu>

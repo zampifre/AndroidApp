@@ -1,6 +1,11 @@
 package com.example.gestionale;
 
-public class Attivita {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+public class Attivita implements Comparable<Attivita> {
 
    private int id;
    private int stato;
@@ -50,5 +55,32 @@ public class Attivita {
 
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
+    }
+
+    public Date dammiData(String data) {
+        Date res = null;
+        try {
+            res = new SimpleDateFormat("dd/MM/yyyy", Locale.ITALIAN).parse(data);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return res;
+    }
+
+    @Override
+    public int compareTo(Attivita attivita) {
+        if (this.dammiData(this.data).compareTo(attivita.dammiData(attivita.data)) > 0) {
+            return 1;
+        } else if (this.dammiData(this.data).compareTo(attivita.dammiData(attivita.data)) < 0) {
+            return -1;
+        } else {
+            if (this.ora.compareTo(attivita.ora) > 0) {
+                return 1;
+            } else if (this.ora.compareTo(attivita.ora) < 0) {
+                return -1;
+            } else {
+                return 0;
+            }
+        }
     }
 }
