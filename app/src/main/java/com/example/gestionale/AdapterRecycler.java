@@ -45,7 +45,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
         @SuppressLint("ResourceType")
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            idt = itemView.findViewById(R.id.id);
+            //idt = itemView.findViewById(R.id.id);
             descrizione2 = itemView.findViewById(R.id.descrizione);
             ora2 = itemView.findViewById(R.id.ora);
             data2 = itemView.findViewById(R.id.data);
@@ -67,7 +67,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
 
     @Override
     public void onBindViewHolder(@NonNull AdapterRecycler.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
-        holder.idt.setText(String.valueOf(id_array.get(position)));
+        //holder.idt.setText(String.valueOf(id_array.get(position)));
         holder.descrizione2.setText(String.valueOf(descrizione_array.get(position)));
         holder.ora2.setText(String.valueOf(ora.get(position)));
         holder.data2.setText(String.valueOf(data.get(position)));

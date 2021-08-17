@@ -10,7 +10,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.DayNight.DarkActionBar">
-        <activity android:name=".AggiornaActivity"
+        <activity
+            android:name=".AggiornaActivity"
             android:parentActivityName=".GestionePrioritaActivity"
             tools:ignore="DuplicateActivity" />
         <activity
