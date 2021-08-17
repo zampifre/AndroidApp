@@ -68,6 +68,9 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
     @Override
     public void onBindViewHolder(@NonNull AdapterRecycler.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         //holder.idt.setText(String.valueOf(id_array.get(position)));
+        //BubbleSort bb = new BubbleSort();
+        //bb.bubbleSort(data, id_array, descrizione_array, ora);
+
         holder.descrizione2.setText(String.valueOf(descrizione_array.get(position)));
         holder.ora2.setText(String.valueOf(ora.get(position)));
         holder.data2.setText(String.valueOf(data.get(position)));
