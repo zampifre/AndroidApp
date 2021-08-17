@@ -13,12 +13,16 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 
 public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyViewHolder> {
 
@@ -68,8 +72,7 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
     @Override
     public void onBindViewHolder(@NonNull AdapterRecycler.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
         //holder.idt.setText(String.valueOf(id_array.get(position)));
-        //BubbleSort bb = new BubbleSort();
-        //bb.bubbleSort(data, id_array, descrizione_array, ora);
+        bubbleSort();
 
         holder.descrizione2.setText(String.valueOf(descrizione_array.get(position)));
         holder.ora2.setText(String.valueOf(ora.get(position)));
@@ -104,4 +107,57 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
         return id_array.size();
     }
 
+    public void bubbleSort() {
+        ArrayList <Date> tmp = daStringADate(data);
+        boolean sorted = false;
+        Object temp2;
+        Date temp1;
+        String temp3;
+        String temp4;
+        while (!sorted) {
+            sorted = true;
+            for (int i = 0; i < tmp.size() - 1; i++) {
+                if (tmp.get(i).compareTo(tmp.get(i + 1)) > 0){
+                    temp1 = tmp.get(i);
+                    temp2 = id_array.get(i);
+                    temp3 = (String) descrizione_array.get(i);
+                    temp4 = (String) ora.get(i);
+                    tmp.set(i, tmp.get(i + 1));
+                    id_array.set(i, id_array.get(i + 1));
+                    descrizione_array.set(i, descrizione_array.get(i+1));
+                    ora.set(i, ora.get(i+1));
+                    tmp.set((i + 1), temp1);
+                    id_array.set(i+1, temp2);
+                    descrizione_array.set(i + 1, temp3);
+                    ora.set(i+1,temp4);
+
+                    sorted = false;
+                }
+            }
+        }
+        //devo riconvertire l'array di date in stringhe
+        data = daDateAString(tmp);
+    }
+
+    public ArrayList <Date> daStringADate(ArrayList data){
+        ArrayList <Date> res = new ArrayList<Date>();
+        for(int i = 0; i < data.size(); ++i){
+            SimpleDateFormat f = new SimpleDateFormat("dd/MM/yy", Locale.ITALIAN);
+            try {
+                res.add(f.parse(String.valueOf(data.get(i))));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+
+    public ArrayList daDateAString(ArrayList <Date> data){
+        ArrayList stringhe = new ArrayList();
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        for(int i = 0; i < data.size(); ++i){
+            stringhe.add(df.format(data.get(i)));
+        }
+        return stringhe;
+    }
 }
