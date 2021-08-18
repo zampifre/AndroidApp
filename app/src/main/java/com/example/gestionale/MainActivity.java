@@ -7,6 +7,10 @@ import android.view.View;
 import android.widget.Button;
 import android.content.Intent;
 
+/** Classe Padre nella quale avviene la scelta su una delle due funzionalità dell'app,
+ *  Gestione Monetaria o Gestione Priorità
+ *  **/
+
 public class MainActivity extends AppCompatActivity {
 
     private Button button;
@@ -25,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //Metodo che crea un Intent per invocare l'activity Gestione Priorità
     public void openGestionePriorita(){
         Intent intent = new Intent(this, GestionePrioritaActivity.class);
         startActivity(intent);

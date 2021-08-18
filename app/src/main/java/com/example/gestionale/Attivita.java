@@ -5,10 +5,11 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+/** Creazione della classe Attività contenente id, descrizione, data, ora **/
+
 public class Attivita implements Comparable<Attivita> {
 
    private int id;
-   private int stato;
    private String descrizione;
    private String data;
    private String ora;
@@ -37,18 +38,6 @@ public class Attivita implements Comparable<Attivita> {
         this.id = id;
     }
 
-    public boolean getStato() {
-       if(this.stato == 0){
-           return false;
-       } else {
-           return true;
-       }
-    }
-
-    public void setStato(int stato) {
-        this.stato = stato;
-    }
-
     public String getDescrizione() {
         return descrizione;
     }
@@ -57,6 +46,7 @@ public class Attivita implements Comparable<Attivita> {
         this.descrizione = descrizione;
     }
 
+    //Metodo per prelevare la data di un'attività
     public Date dammiData(String data) {
         Date res = null;
         try {
@@ -67,6 +57,7 @@ public class Attivita implements Comparable<Attivita> {
         return res;
     }
 
+    //Implementazione del metodo compareTo
     @Override
     public int compareTo(Attivita attivita) {
         if (this.dammiData(this.data).compareTo(attivita.dammiData(attivita.data)) > 0) {

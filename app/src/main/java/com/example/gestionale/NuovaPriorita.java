@@ -19,13 +19,25 @@ import java.util.Date;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * Classe che implementa l'activity "Nuova Priorità";
+ * All'interno, la classe sviluppa inoltre un TimePicker per
+ * l'inserimento dell'orario e un DatePicker per aggiungere la data di una priorità.
+ * **/
+
 public class NuovaPriorita extends AppCompatActivity{
 
+    //TV che riceverà l'inserimento dell'ora
     TextView orario;
+    //Variabili per il TimePicker
     int tore, tminuti, tsecondi;
+    //TV che riceverà l'inserimento della data
     TextView seleziona;
+    //EditText per l'inserimento di una descrizione
     EditText descrizione;
+    //Bottone per salvare i dati sul DB
     Button salva;
+    //Attributo DatePicker
     DatePickerDialog.OnDateSetListener setListener;
 
     public static NuovaPriorita nuovaPriorita(){
@@ -35,11 +47,14 @@ public class NuovaPriorita extends AppCompatActivity{
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Settaggio del Layout al relativo file XML
         setContentView(R.layout.nuova_priorita);
-
+        //Linker tra Oggetti e Compomenti XML
         orario = findViewById(R.id.tvora);
         seleziona = findViewById(R.id.tvdata);
 
+        //Metodo OnCLickListener per far si che dopo il click sopra
+        //alla TextVIew orario, si apra il Picker per l'inserimento
         orario.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -47,6 +62,7 @@ public class NuovaPriorita extends AppCompatActivity{
                         NuovaPriorita.this, android.R.style.Theme_Holo_Light_Dialog_MinWidth,
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
+                            //Metodo per settare il tipo di orario (12H o 24H)
                             public void onTimeSet(TimePicker timePicker, int ore, int minuti) {
                                 tore = ore;
                                 tminuti = minuti;
@@ -57,7 +73,7 @@ public class NuovaPriorita extends AppCompatActivity{
                                 try {
                                     Date date = t24.parse(time);
                                     SimpleDateFormat t12 = new SimpleDateFormat(
-                                            "hh:mm aa"
+                                           "hh:mm aa"
                                     );
                                     orario.setText(t12.format(date));
                                 } catch (ParseException e) {
@@ -77,6 +93,7 @@ public class NuovaPriorita extends AppCompatActivity{
         final int mese = calendar.get(Calendar.MONTH);
         final int giorno = calendar.get(Calendar.DAY_OF_MONTH);
 
+        //Metodo OnClick per far si che clickando sulla TextView data si apra il Date Picker
         seleziona.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -98,9 +115,11 @@ public class NuovaPriorita extends AppCompatActivity{
 
         descrizione = findViewById(R.id.descrizione);
         salva = findViewById(R.id.salva);
+        //Metodo OnCLick per salvare i dati inseriti sul DB
         salva.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //creazione di un nuovo DataBase
                 DbPriorità db = new DbPriorità(NuovaPriorita.this);
                 db.aggiungiPriorita(descrizione.getText().toString().trim(), orario.getText().toString().trim(), seleziona.getText().toString().trim());
             }

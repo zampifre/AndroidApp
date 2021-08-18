@@ -22,9 +22,14 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+/** Classe Aggiorna Priorità, creata nel momento in cui viene selezionata
+ * un'attività specifica; permette di modificare gli attributi dell'Attivitò e aggiornare
+ * i dati reciproci sul DB
+ * **/
 
 public class AggiornaActivity extends AppCompatActivity {
 
+    //Componenti del Layout
     TextView tvdata2, tvora2;
     EditText descrizione2;
     Button salva2, cancella;
@@ -35,8 +40,10 @@ public class AggiornaActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Settaggio del relativo Layout XML
         setContentView(R.layout.activity_aggiorna);
 
+        //Linker tra Oggetti Java e componenti XML
         tvdata2 = findViewById(R.id.tvdata2);
         tvora2 = findViewById(R.id.tvora2);
         descrizione2 = findViewById(R.id.descrizione2);
@@ -45,11 +52,14 @@ public class AggiornaActivity extends AppCompatActivity {
 
         getAndSetIntentData();
 
+        //Creazione dell'action bar
         ActionBar actionBar = getSupportActionBar();
         if(actionBar != null) {
             actionBar.setTitle(descrizione);
         }
 
+        //Crazione dello stesso TimePicker della classe NuovaPriorà, verrà usato
+        //per modificare e quindi inserire i nuovi dati sull'orario
         tvora2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -87,6 +97,8 @@ public class AggiornaActivity extends AppCompatActivity {
         final int mese = calendar.get(Calendar.MONTH);
         final int giorno = calendar.get(Calendar.DAY_OF_MONTH);
 
+        //Creazione dello stesso DatePicker della classe NuovaPriorità per modificare e re-inserire
+        //la data dell'attività
         tvdata2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +118,8 @@ public class AggiornaActivity extends AppCompatActivity {
             }
         };
 
+        //Metodo OnClick sul bottone AGGIORNA, permette di modificare i dati appena inseriti
+        //al posto dei reciproci presenti in precedenza sul DB
         salva2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -117,45 +131,59 @@ public class AggiornaActivity extends AppCompatActivity {
             }
         });
 
+        //Metodo OnClick sul bottone CANCELLA, permette di cancellare la singola
+        //attività dal DB
         cancella.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //Invocazione del ConfirmDialog di richiesta conferma
                 confermaDialog();
             }
         });
     }
 
+    //Metodo che permette di recuperare i dati dell'attività scelta e renderli visibili
+    //nel momento in cui si vogliano modificare; permette di visualizzare i dati che erano
+    //stati settati in precedenza
     void getAndSetIntentData(){
+        //controllo se ci sono dati relativi all'attività scelta
         if(getIntent().hasExtra("id") && getIntent().hasExtra("descrizione") && getIntent().hasExtra("ora") &&
         getIntent().hasExtra("data")) {
-            //get dei dati
+            //get dei dati dalle colonne
             id = getIntent().getStringExtra("id");
             descrizione = getIntent().getStringExtra("descrizione");
             ora = getIntent().getStringExtra("ora");
             data = getIntent().getStringExtra("data");
 
-            //Set dei dati
+            //Set dei dati prelevati dalla TextView di questa Activity,
+            //dal DatePicker e il TimePicker
             descrizione2.setText(descrizione);
             tvora2.setText(ora);
             tvdata2.setText(data);
         } else {
+            //In caso contrario
             Toast.makeText(this, "Non ci sono dati", Toast.LENGTH_SHORT).show();
         }
     }
 
+    //Creazione del ConfirmDialog usato per richiedere se si vuole cancellare
+    //l'attività selezionata con tale descrizione
     void confermaDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Cancellare " + descrizione + " ?");
         builder.setMessage("Confermi di voler cancellare?");
         builder.setPositiveButton("SI", new DialogInterface.OnClickListener() {
             @Override
+            //OnClick (positivo - Cancella)
             public void onClick(DialogInterface dialogInterface, int i) {
                 DbPriorità db = new DbPriorità(AggiornaActivity.this);
+                //chiamata al metodo cancella riga del DB
                 db.cancellaRiga(id);
                 finish();
             }
         });
 
+        //OnClick (negativo - non fa nulla)
         builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
