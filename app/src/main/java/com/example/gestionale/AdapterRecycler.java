@@ -137,11 +137,12 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
     public void bubbleSort() {
         //per prima cosa devo convertire l'array delle date (sottoforma di stringhe) in formato Date
         ArrayList <Date> tmp = daStringADate(data);
+        ArrayList <Date> tmp_ore = daStringAOre(ora);
         boolean sorted = false;
         Object temp2;
         Date temp1;
         String temp3;
-        String temp4;
+        Date temp4;
         while (!sorted) {
             sorted = true;
             for (int i = 0; i < tmp.size() - 1; i++) {
@@ -149,24 +150,41 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
                     temp1 = tmp.get(i);
                     temp2 = id_array.get(i);
                     temp3 = (String) descrizione_array.get(i);
-                    temp4 = (String) ora.get(i);
+                    temp4 = tmp_ore.get(i);
                     tmp.set(i, tmp.get(i + 1));
                     id_array.set(i, id_array.get(i + 1));
                     descrizione_array.set(i, descrizione_array.get(i+1));
-                    ora.set(i, ora.get(i+1));
+                    tmp_ore.set(i, tmp_ore.get(i+1));
                     tmp.set((i + 1), temp1);
                     id_array.set(i+1, temp2);
                     descrizione_array.set(i + 1, temp3);
-                    ora.set(i+1,temp4);
+                    tmp_ore.set(i+1, temp4);
 
                     sorted = false;
-                } //else if(tmp.get(i).compareTo(tmp.get(i + 1)) == 0){
+                } else if(tmp.get(i).compareTo(tmp.get(i + 1)) == 0){
+                    if(tmp_ore.get(i).compareTo(tmp_ore.get(i + 1)) > 0){
+                        temp1 = tmp.get(i);
+                        temp2 = id_array.get(i);
+                        temp3 = (String) descrizione_array.get(i);
+                        temp4 = tmp_ore.get(i);
+                        tmp.set(i, tmp.get(i + 1));
+                        id_array.set(i, id_array.get(i + 1));
+                        descrizione_array.set(i, descrizione_array.get(i+1));
+                        tmp_ore.set(i, tmp_ore.get(i+1));
+                        tmp.set((i + 1), temp1);
+                        id_array.set(i+1, temp2);
+                        descrizione_array.set(i + 1, temp3);
+                        tmp_ore.set(i+1, temp4);
 
-                //}
+                        sorted = false;
+                    }
+                }
             }
         }
         //devo riconvertire l'array di Date in stringhe
         data = daDateAString(tmp);
+        //devo riconvertire l'array di Ore in Stringhe
+        ora = daDateAOre(tmp_ore);
     }
 
     //metodo che converte da Stringa a Date ogni singolo elemento dell'array e ritorna
@@ -184,6 +202,19 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
         return res;
     }
 
+    public ArrayList <Date> daStringAOre(ArrayList ore){
+        ArrayList <Date> res = new ArrayList<Date>();
+        for(int i = 0; i < ore.size(); ++i){
+            SimpleDateFormat f = new SimpleDateFormat("hh:mm aa");
+            try {
+                res.add(f.parse(String.valueOf(ore.get(i))));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return res;
+    }
+
     //metodo che converte da Date a Stringa per far tornare un ArrayList come quello originario
     //una volta che è stato ordinato
     public ArrayList daDateAString(ArrayList <Date> data){
@@ -194,4 +225,14 @@ public class AdapterRecycler extends RecyclerView.Adapter<AdapterRecycler.MyView
         }
         return stringhe;
     }
+
+    public ArrayList daDateAOre(ArrayList <Date> ore){
+        ArrayList stringhe = new ArrayList();
+        DateFormat df = new SimpleDateFormat("hh:mm aa");
+        for(int i = 0; i < ore.size(); ++i){
+            stringhe.add(df.format(ore.get(i)));
+        }
+        return stringhe;
+    }
+
 }
